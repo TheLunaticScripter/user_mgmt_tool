@@ -1,0 +1,5 @@
+default['ls_user_mgmt_tool']['exch_server_fqdn'] = 'Exch-SRV1.test.local'
+default['ls_user_mgmt_tool']['mail_database'] = 'Mailbox Database'
+default['ls_user_mgmt_tool']['default_ou_path'] = 'OU=Users,DC=test,DC=local'
+default['ls_user_mgmt_tool']['registrar_pool'] = 'Lync-Pool.test.local'
+default['ls_user_mgmt_tool']['lync_source'] = 'c:\Lync'

@@ -1,0 +1,8 @@
+name: ls_user_mgmt_tool_test
+title: User Managment Tool Smoke Test
+maintainer: John Snow
+copyright: John Snow
+copyright_email: thelunaticscripter@outlook.com
+license: All Rights Reserved
+summary: InSpec Testing for User Mgmt Tool
+version: 0.1.1

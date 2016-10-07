@@ -1,0 +1,811 @@
+# XAML Code from VS2013 WPF
+Add-Type -AssemblyName "PresentationFramework"
+Add-Type -AssemblyName "WindowsBase"
+[xml]$XAML = @'
+<Window 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Name="UMT_Window" Title="User Management Tool" Height="225" Width="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--This is the Start of the Main Page for the User Managment Tool-->
+        
+        <!--This is the Title Menu for the Main Page-->
+        <StackPanel Name="umt_main_title" Visibility="Visible">
+            <TextBlock Text="User Management Tool"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Margin="10,0,0,0"/>
+        </StackPanel>
+        <!--This is the Selection Menu For the Tool any Additional tools and Services Should be added here-->
+        <Grid Grid.Row="1" Name="umt_Main_Grid" Visibility="Visible">
+            <StackPanel Name="umt_mg_Label">
+                <Label Name="umt_mg_Exchange"
+                       Content="Exchange Tasks:"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       FontSize="14"
+                       Margin="5,5,5,0"/>
+                <StackPanel Name="umt_mg_exch_Buttons" Orientation="Vertical">
+                    <Button Name="umt_mg_exch_enableUser" 
+                            Content="Enable User Account" 
+                            Height="30" 
+                            Width="120" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Margin="30,0,0,0"/>
+                </StackPanel>
+                <Label Name="umt_mg_Active_Directory"
+                       Content="Active Directory Tasks:"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       FontSize="14"
+                       Margin="5,5,5,0"/>
+                <StackPanel Name="umt_mg_AD_Buttons" Orientation="Vertical">
+                    <Button Name="umt_mg_ad_CreateUserAcct"
+                            Content="Create User Account"
+                            Height="30"
+                            Width="120"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="30,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <!-- End Main Page User Managment Tool-->
+
+        <!--Start of the Exchange Enable User Tool Size for tool window is Height:200 Width:700-->
+        <!-- Exchange User Account Tool Title Menu Default Visibility is Hidden-->
+        <StackPanel Name="umt_title_exch_enableUser" Visibility="Hidden" Orientation="Horizontal">
+            <TextBlock Name="exch_enableUser_title_txtblock"
+                       Text="Exchange - Enable User Account"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Margin="10,0,0,0"/>
+        </StackPanel>
+        <Button Name="umt_exch_enableUser_btnBack" 
+                Content="Back" 
+                Height="30" Width="100" 
+                HorizontalAlignment="Right" 
+                Margin="5,5,15,5" 
+                Visibility="Hidden"/>
+        
+        <!-- Exchange User Account Enable Main Grid Default Visibility is Hidden-->
+        <Grid Grid.Row="1" Name="umt_exch_enableUser_grid" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Name="exch_enableUser_Labels">
+                <Label Name="exch_enableUser_UPN"
+                       Content="User name (ex: john.smith): "
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       FontSize="14"
+                       Margin="5,5,5,0"/>
+                <TextBlock Name="exch_enableUser_OutputBlock"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="5,5,0,0"/>
+            </StackPanel>
+            <StackPanel Name="exch_enableUser_TxtBoxes" Grid.Column="1">
+                <TextBox Name="exch_enableUser_UPNtxtbox"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Height="25"
+                         TextWrapping="NoWrap"
+                         Width="200"
+                         Margin="5,5,5,0"/>
+            </StackPanel>
+            <StackPanel Name="exch_enableUser_Buttons" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10">
+                <Button Name="exch_enableUser_btn_Submit" Content="Submit" Height="30" Width="100"/>
+                <Button Name="exch_enableUser_btn_Clear" Content="Clear" Height="30" Width="100" Margin="0,5,0,5"/>
+                <Button Name="exch_enableUser_bt_Close" Content="Close" Height="30" Width="100"/>
+            </StackPanel>
+        </Grid>
+        <!-- End Exchange User Account Tool-->
+
+        <!-- Start of the Active Directory User Account Creation Tool -->
+        <!-- AD: Create User Account Title Stack Panel-->
+        <StackPanel Name="ad_title_create_user_acct_panel" Visibility="Hidden" Orientation="Horizontal">
+            <TextBlock Name="ad_user_create_title_txtblock"
+                       Text="Active Directory - Create User Account"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Margin="10,0,0,0"/>
+        </StackPanel>
+        <Button Name="ad_user_create_Back_btn_FirstPage" 
+                Content="Back" 
+                Height="30" 
+                Width="100" 
+                HorizontalAlignment="Right" 
+                Margin="5,5,5,5"
+                Visibility="Hidden"/>
+
+        <!-- AD Starting Grid for User Account Creation First Page (Form to File Out)-->
+        <Grid Grid.Row="1" Name="ad_body_create_user_acct_grid_firstpage" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <!-- User Account Creation Form -->
+            <StackPanel Name="adcua_firstpage_Labels">
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_firstpage_FirstName_label"
+                           Content="First Name:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <TextBox Name="adcua_firstpage_FirstName_txtbox"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Height="25"
+                             TextWrapping="NoWrap"
+                             Width="200"
+                             Margin="38,5,5,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_firstpage_MiddleInitial_label"
+                           Content="Middle Initial:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <TextBox Name="adcua_firstpage_MiddleInital_txtbox"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Height="25"
+                             TextWrapping="NoWrap"
+                             Width="200"
+                             Margin="26,5,5,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_firstpage_LastName_label"
+                           Content="Last Name:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <TextBox Name="adcua_firstpage_LastName_txtbox"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Height="25"
+                             TextWrapping="NoWrap"
+                             Width="200"
+                             Margin="39,5,5,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_firstpage_milcivctr_label"
+                           Content="Description:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <ComboBox Name="adcua_firstpage_milcivctr_box"
+                              Height="25"
+                              MaxWidth="200"
+                              MinWidth="45"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Left"
+                              Margin="35,5,5,0">
+                        <ComboBoxItem Content="*Select An Item*"/>
+                        <ComboBoxItem Content="Option 1"/>
+                        <ComboBoxItem Content="Option 2"/>
+                        <ComboBoxItem Content="Option 3"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_firstpage_Password_label"
+                           Content="Password:"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <PasswordBox Name="adcua_firstpage_Password_box"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 Height="25"
+                                 Width="200"
+                                 Margin="46,5,5,0"/>
+
+                </StackPanel>
+                <StackPanel Name="adcua_firstpage_AltUserName_panel" Orientation="Horizontal" Visibility="Hidden">
+                    <Label Name="adcua_firstpage_AltUserName_label"
+                           Content="Alt User Name:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <TextBox Name="adcua_firstpage_AltUserName_txtbox"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Height="25"
+                             TextWrapping="NoWrap"
+                             Width="200"
+                             Margin="19,5,5,0"/>
+                </StackPanel>
+                <StackPanel Name="adcua_firstpage_AltDisplayName_panel" Orientation="Horizontal" Visibility="Hidden">
+                    <Label Name="adcua_firstpage_AltDisplayName_label"
+                           Content="Alt Display Name:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <TextBox Name="adcua_firstpage_AltDisplayName_txtbox"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Height="25"
+                             TextWrapping="NoWrap"
+                             Width="200"
+                             Margin="4,5,5,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Buttons and Error Text Block-->
+            <TextBlock Name="adcua_firstpage_Error_txtBlock"
+                       Grid.Column="1"
+                       Height="150"
+                       Width="100"
+                       TextWrapping="Wrap"
+                       FontSize="12"
+                       Foreground="Red"
+                       Text=""/>
+            <StackPanel Name="adcua_firstpage_btns_panel" 
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,5,5">
+                <Button Name="adcua_firstpage_Submit_btn"
+                        Content="Submit"
+                        Height="30"
+                        Width="100"
+                        Margin="5,5,5,5"/>
+                <Button Name="adcua_firstpage_Clear_btn"
+                        Content="Clear"
+                        Height="30"
+                        Width="100"
+                        Margin="5,0,5,5"/>
+                <Button Name="adcua_firstpage_Close_btn"
+                        Content="Close"
+                        Height="30"
+                        Width="100"
+                        Margin="5,0,5,5"/>
+            </StackPanel>
+        </Grid>
+        <!-- End First Page Form -->
+
+        <!-- Start Second Page Poplulate the newly created User's Information Default Width: 600 -->
+        <Grid Grid.Row="1" Name="adcua_secondpage_body_grid" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Name="adcua_secondpage_labels">
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_secondpage_ADAccount_Success_label"
+                           Content="Creating Account: "
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <Grid>
+                        <ProgressBar Name="adcua_secondpage_ADAccount_prgbar"
+                                     IsIndeterminate="True" 
+                                     Margin="5,5,5,10" 
+                                     Height="5"
+                                     Width="200"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Bottom"                                 
+                                     Visibility="Visible"/>
+                        <TextBlock Name="adcua_secondpage_ADAccount_Success_txtBlock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="Success the Account has been Created!"
+                                   Foreground="Green"
+                                   Margin="11,5,0,0"
+                                   Visibility="Hidden"/>
+                        <TextBlock Name="adcua_secondpage_ADAccount_Error_txtblock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="ERROR!! User Account Creation failed!"
+                                   Foreground="Red"
+                                   Margin="11,5,0,0"
+                                   Visibility="Hidden"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_secondpage_ExchAcct_Success_label"
+                           Content="Creating Mailbox:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <Grid>
+                        <ProgressBar Name="adcua_secondpage_ExchAcct_Success_prgbar"
+                                     IsIndeterminate="True"
+                                     Margin="9,5,5,10"
+                                     Height="5"
+                                     Width="200"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Bottom"
+                                     Visibility="Visible"/>
+                        <TextBlock Name="adcua_secondpage_ExchAcct_Success_txtBlock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="Success the Mailbox has been Enabled!"
+                                   Foreground="Green"
+                                   Margin="15,5,0,0"
+                                   Visibility="Hidden"/>
+                        <TextBlock Name="adcua_secondpage_ExchAcct_Error_txtBlock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="ERROR!! Enabling the Mailbox Failed!"
+                                   Foreground="Red"
+                                   Margin="15,5,0,0"
+                                   Visibility="Hidden"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="adcua_secondpage_SkypeAcct_label"
+                           Content="Creating Skype Acct:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="12"
+                           Margin="5,5,5,0"/>
+                    <Grid>
+                        <ProgressBar Name="adcua_secondpage_SkypeAcct_prgbar"
+                                     IsIndeterminate="True"
+                                     Margin="0,5,5,10"
+                                     Height="5"
+                                     Width="190"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Bottom"
+                                     Visibility="Visible"/>
+                        <TextBlock Name="adcua_secondpage_SkypeAcct_Success_txtBlock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="Success, Skype has been Enabled!"
+                                   Foreground="Green"
+                                   Margin="0,5,0,0"
+                                   Visibility="Hidden"/>
+                        <TextBlock Name="adcua_secondpage_SkypeAcct_Error_txtBlock"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Text="ERROR!! Enabling Skype Account Failed!"
+                                   Foreground="Red"
+                                   Margin="0,5,0,0"
+                                   Visibility="Hidden"/>
+                    </Grid>
+                </StackPanel>
+                <TextBlock Name="adcua_secondpage_finalsuccess_txtBlock"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Height="100"
+                           Width="300"
+                           TextWrapping="Wrap"
+                           Text=""
+                           Foreground="Green"
+                           Margin="25,25,5,5"/>
+            </StackPanel>
+
+            <StackPanel Name="adcua_secondpage_btns_panel" 
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,5,5">
+                <Button Name="adcua_secondpage_crtUserAcct_btn"
+                        Content="Create User Account"
+                        Height="30"
+                        Width="120"
+                        Margin="5,0,5,5"/>
+                <Button Name="adcua_secondpage_Close_btn"
+                        Content="Close"
+                        Height="30"
+                        Width="120"
+                        Margin="5,0,5,5"/>
+            </StackPanel>
+        </Grid>
+        <!-- End of the Second Page-->
+        <!-- End of the AD Create User Account GUI-->
+
+    </Grid>
+</Window>
+'@
+
+#Read XAML
+$reader=(New-Object System.Xml.XmlNodeReader $XAML)
+try{$Form=[Windows.Markup.XamlReader]::Load($reader)}
+catch{Write-Host "Failed to Load XAML"; exit}
+
+#Store Form Objects in PowerShell
+$XAML.SelectNodes("//*[@Name]") | %{Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)}
+
+#Events
+
+$PDCEmulator = Get-ADDomainController -Discover -Service PrimaryDC
+
+# Events to control the Exchange Task - Enable User Account
+
+# ----------------------------------------------------------------------
+
+$umt_mg_exch_enableUser.Add_Click({
+    $umt_main_title.Visibility = "Hidden"
+    $umt_Main_Grid.Visibility = "Hidden"
+    $umt_title_exch_enableUser.Visibility = "Visible"
+    $umt_exch_enableUser_grid.Visibility = "Visible"
+    $umt_exch_enableUser_btnBack.Visibility = "Visible"
+})
+
+$umt_exch_enableUser_btnBack.Add_Click({
+    $umt_main_title.Visibility = "Visible"
+    $umt_Main_Grid.Visibility = "Visible"
+    $umt_title_exch_enableUser.Visibility = "Hidden"
+    $umt_exch_enableUser_grid.Visibility = "Hidden"
+    $exch_enableUser_UPNtxtbox.Text = ""
+    $exch_enableUser_UPN.Foreground = "Black"
+    $exch_enableUser_OutputBlock.Text = ""
+    $exch_enableUser_OutputBlock.Foreground = "Black"
+    $umt_exch_enableUser_btnBack.Visibility = "Hidden"
+})
+
+$exch_enableUser_btn_Clear.Add_Click({
+    $exch_enableUser_UPNtxtbox.Text = ""
+    $exch_enableUser_UPN.Foreground = "Black"
+    $exch_enableUser_OutputBlock.Text = ""
+    $exch_enableUser_OutputBlock.Foreground = "Black"
+})
+
+$exch_enableUser_bt_Close.Add_Click({
+    $Form.Close()
+})
+
+$exch_enableUser_btn_Submit.Add_Click({
+    
+    # Check if user Account is created in Active Directory
+    $user = Get-ADUser -Identity $exch_enableUser_UPNtxtbox.Text -ErrorAction SilentlyContinue
+
+    if($user -eq $null){
+        $exch_enableUser_UPN.Foreground = "Red"
+        $exch_enableUser_OutputBlock.Foreground = "Red"
+        $exch_enableUser_OutputBlock.Text = "The User Account needs to be created in AD before enabling the Mailbox."
+        return
+    }
+    
+    # Connect to Exchange through the URI to pull down the Exchange CmdLets
+    # This need to be modified with Chef as an attribute for each network
+    $Ses = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://<%= @exch_server_fqdn %>/PowerShell -Authentication Kerberos
+    Import-PSSession $Ses -ErrorAction SilentlyContinue
+
+    # Enable the users Exchange Account
+
+    Enable-Mailbox -Identity $exch_enableUser_UPNtxtbox.Text -DomainController $PDCEmulator.Name -Database "<%= @mail_database %>"
+    
+    $exch_enableUser_OutputBlock.Foreground = "Green"
+    $exch_enableUser_OutputBlock.Text = "You have successfully enabled $($exch_enableUser_UPNtxtbox.Text) for Exchange 2013. Please Click back to return to the options page or clear to enable another user."
+    
+})
+# End Exchange Task - Enable User Account
+
+# ------------------------------------------------------------------------------------
+
+# Start Events for Active Directory Task - Create User Account
+
+# ------------------------------------------------------------------------------------
+
+$umt_mg_ad_CreateUserAcct.Add_Click({
+    $umt_main_title.Visibility = "Hidden"
+    $umt_Main_Grid.Visibility = "Hidden"
+    $ad_title_create_user_acct_panel.Visibility = "Visible"
+    $ad_user_create_Back_btn_FirstPage.Visibility = "Visible"
+    $ad_body_create_user_acct_grid_firstpage.Visibility = "Visible"
+    $UMT_Window.Height = "300"
+    $UMT_Window.Width = "600"
+})
+
+$ad_user_create_Back_btn_FirstPage.Add_Click({
+    $umt_main_title.Visibility = "Visible"
+    $umt_Main_Grid.Visibility = "Visible"
+    $ad_title_create_user_acct_panel.Visibility = "Hidden"
+    $ad_user_create_Back_btn_FirstPage.Visibility = "Hidden"
+    $ad_body_create_user_acct_grid_firstpage.Visibility = "Hidden"
+    $UMT_Window.Height = "225"
+    $UMT_Window.Width = "700"
+    $adcua_firstpage_FirstName_txtbox.Text = ""
+    $adcua_firstpage_FirstName_label.Foreground = "Black"
+    $adcua_firstpage_MiddleInital_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_firstpage_LastName_txtbox.Text = ""
+    $adcua_firstpage_LastName_label.Foreground = "Black"
+    $adcua_firstpage_milcivctr_box.Text = ""
+    $adcua_firstpage_milcivctr_label.Foreground = "Black"
+    $adcua_firstpage_Password_box.Password = ""
+    $adcua_firstpage_Password_label.Foreground = "Black"
+    $adcua_firstpage_Error_txtBlock.Text = ""
+    $adcua_firstpage_AltUserName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltUserName_txtbox.Text = ""
+    $adcua_firstpage_AltDisplayName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltDisplayName_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_secondpage_ADAccount_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ADAccount_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_ADAccount_Error_txtblock.Visibility = "Hidden"
+    $adcua_secondpage_finalsuccess_txtBlock.Text = ""
+    $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Green"
+    $adcua_secondpage_ExchAcct_Success_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ExchAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_ExchAcct_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_prgbar.Visibility = "Visible"
+    $adcua_secondpage_SkypeAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_Success_txtBlock.Visibility = "Hidden"
+})
+
+$adcua_firstpage_Submit_btn.Add_Click({
+    $Form_Fillout_Error = $false
+    If($adcua_firstpage_FirstName_txtbox.Text -eq ""){
+        $adcua_firstpage_FirstName_label.Foreground = "Red"
+        $Form_Fillout_Error = $true
+    }
+    if($adcua_firstpage_LastName_txtbox.Text -eq ""){
+        $adcua_firstpage_LastName_label.Foreground = "Red"
+        $Form_Fillout_Error = $true
+    }
+    if(($adcua_firstpage_milcivctr_box.Text -eq "") -or ($adcua_firstpage_milcivctr_box.Text -eq "*Select An Item*")){
+        $adcua_firstpage_milcivctr_label.Foreground = "Red"
+        $Form_Fillout_Error = $true
+    }
+    if($adcua_firstpage_Password_box.Password -eq ""){
+        $adcua_firstpage_Password_label.Foreground = "Red"
+        $Form_Fillout_Error = $true
+    }
+    if($Form_Fillout_Error -eq $true){
+        $adcua_firstpage_Error_txtBlock.Text = "To Create an Account all the fields in Red need to be Filled Out."
+        return
+    }
+
+    $AltUserName = $false
+    $UserName = $adcua_firstpage_FirstName_txtbox.Text + "." + $adcua_firstpage_LastName_txtbox.Text
+
+    # Write-Host $UserName
+
+    try{
+        $User = Get-ADUser -Identity $UserName -Server $PDCEmulator.Name
+    }
+    catch{}
+
+    if($adcua_firstpage_AltUserName_txtbox.Text -eq ""){
+        if($User -ne $null){
+            # Write-Host "First User Name Failed"
+            $adcua_firstpage_Error_txtBlock.Text = "A user $UserName already exists in AD."
+            $adcua_firstpage_AltUserName_panel.Visibility = "Visible"
+            $adcua_firstpage_AltDisplayName_panel.Visibility = "Visible"
+            return
+        }
+    }
+    else{
+        # Write-Host "Trying alternate user Name"
+        
+        try{
+            $User1 = Get-ADUser -Identity $adcua_firstpage_AltUserName_txtbox.Text -Server $PDCEmulator.Name
+        }
+        catch{}
+        
+        if($User1 -ne $null){
+            Write-Host "Alternate User name Failed"
+            $adcua_firstpage_Error_txtBlock.Text = "A user $($adcua_firstpage_AltUserName_txtbox.Text) also already exists in AD."
+            return
+        }
+        $AltUserName = $true
+        
+    }
+    
+    if($adcua_firstpage_MiddleInital_txtbox.Text.Length -ge 2){
+        $adcua_firstpage_MiddleInitial_label.Foreground = "Red"
+        $adcua_firstpage_Error_txtBlock.Text = "$($adcua_firstpage_MiddleInital_txtbox.Text) is not vaild as a Middle INITIAL. If no Middle Inital leave blank."
+        return
+    }
+
+    # Create a new user account because the first set of test passed.
+
+    $UserDisplayName = "$($adcua_firstpage_LastName_txtbox.Text), $($adcua_firstpage_FirstName_txtbox.Text) $($adcua_firstpage_MiddleInital_txtbox.Text)"
+    $ad_user_create_Back_btn_FirstPage.Visibility = "Hidden"
+    $ad_body_create_user_acct_grid_firstpage.Visibility = "Hidden"
+    $adcua_secondpage_body_grid.Visibility = "Visible"
+
+    [System.Action]$Action = {}
+
+    $Dispatcher = [System.Windows.Threading.DispatcherPriority]::Render
+
+    $UMT_Window.Dispatcher.Invoke($Dispatcher, $Action)
+    
+    If($AltUserName -eq $true){
+        
+        $UserName = $adcua_firstpage_AltUserName_txtbox.Text
+        $UserDisplayName = $adcua_firstpage_AltDisplayName_txtbox.Text
+    }
+    
+    # This need to be modified with Chef as an attribute for each network
+    $Defaultpath = "<%= @default_ou %>"
+    
+    $UPN = "$UserName@$env:USERDNSDOMAIN"
+
+    $homeDirectory = "\\$env:USERDNSDOMAIN\Users\homedrives\$UserName"
+    
+    New-ADUser `
+               -Name $UserDisplayName `
+               -AccountPassword $adcua_firstpage_Password_box.SecurePassword`
+               -ChangePasswordAtLogon:$true `
+               -Description $adcua_firstpage_milcivctr_box.Text `
+               -DisplayName $UserDisplayName `
+               -EmailAddress $UPN `
+               -Enabled:$true `
+               -GivenName $adcua_firstpage_FirstName_txtbox.Text `
+               -HomeDirectory $homeDirectory `
+               -HomeDrive "Z:" `
+               -Initials $adcua_firstpage_MiddleInital_txtbox.Text `
+               -Path $Defaultpath `
+               -SamAccountName $UserName `
+               -Surname $adcua_firstpage_LastName_txtbox.Text `
+               -Type User `
+               -UserPrincipalName $UPN `
+               -Server $PDCEmulator.Name
+        
+    $TestUser = Get-ADUser -Identity $UserName -Server $PDCEmulator.Name
+    if($TestUser -ne $null){
+        $adcua_secondpage_ADAccount_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_ADAccount_Success_txtBlock.Visibility = "Visible"
+        $UMT_Window.Dispatcher.Invoke($Dispatcher, $Action)
+    }
+    else{
+        $adcua_secondpage_ADAccount_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_ADAccount_Error_txtblock.Visibility = "Visible"
+        $adcua_secondpage_finalsuccess_txtBlock.Text = "The AD Account failed to create check the errors on the PowerShell screen and Contact Systems Engineering."
+        $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Red"
+        return
+    }
+    # End Active Directory User Account Creation protion of Script
+
+    # Begin Exchange Enable Mailbox for new users
+
+    #This Section needs to be updated with Chef for the Environment
+    $Ses = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://<%= @exch_server_fqdn %>/PowerShell -Authentication Kerberos
+    Import-PSSession $Ses -ErrorAction SilentlyContinue
+    
+    # Enable the users Exchange Account
+
+    Enable-Mailbox -Identity $UserName -DomainController $PDCEmulator.Name -Database "<%= @mail_database %>"
+    
+    $UserMailbox = Get-Mailbox -Identity $UserName -DomainController $PDCEmulator.Name
+    
+    if($UserMailbox -eq $null){
+        $adcua_secondpage_ExchAcct_Success_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_ExchAcct_Error_txtBlock.Visibility = "Visible"
+        $adcua_secondpage_finalsuccess_txtBlock.Text = "The Maibox failed to be created check the errors on the PowerShell screen and contact Systems Engineering."
+        $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Red"
+        return
+    }
+    else{
+        $adcua_secondpage_ExchAcct_Success_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_ExchAcct_Success_txtBlock.Visibility = "Visible"
+        $UMT_Window.Dispatcher.Invoke($Dispatcher, $Action)
+    }
+
+    # End Enable User Mailbox section
+
+    # Begin Skype Section
+
+    Enable-CsUser -Identity "$env:USERDNSDOMAIN\$UserName" `
+                  -Confirm:$false `
+                  -RegistrarPool <%= @registrar_pool %> `
+                  -SipAddressType EmailAddress `
+                  -DomainController $PDCEmulator.Name
+
+    $SkypeUser = Get-CsUser -Identity "$env:USERDNSDOMAIN\$UserName" -DomainController $PDCEmulator.Name
+    if($SkypeUser -eq $null){
+        $adcua_secondpage_SkypeAcct_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_SkypeAcct_Error_txtBlock.Visibility = "Visible"
+        $adcua_secondpage_finalsuccess_txtBlock.Text = "Enabling the Skype account failed. Check the errors on the PowerShell screen and contact Systems Engineering."
+        $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Red"
+        return
+    }
+    else{
+        $adcua_secondpage_SkypeAcct_prgbar.Visibility = "Hidden"
+        $adcua_secondpage_SkypeAcct_Success_txtBlock.Visibility = "Visible"
+        $UMT_Window.Dispatcher.Invoke($Dispatcher, $Action)
+    }
+
+    # Write Success message
+    $adcua_secondpage_finalsuccess_txtBlock.Text = "Congratulations the user $UserDisplayName has been created, their email is enabled, and they are ready to use Skype. Have a wonderful day!"
+
+})
+
+$adcua_firstpage_Clear_btn.Add_Click({
+    $adcua_firstpage_FirstName_txtbox.Text = ""
+    $adcua_firstpage_FirstName_label.Foreground = "Black"
+    $adcua_firstpage_MiddleInital_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_firstpage_LastName_txtbox.Text = ""
+    $adcua_firstpage_LastName_label.Foreground = "Black"
+    $adcua_firstpage_milcivctr_box.Text = ""
+    $adcua_firstpage_milcivctr_label.Foreground = "Black"
+    $adcua_firstpage_Password_box.Password = ""
+    $adcua_firstpage_Password_label.Foreground = "Black"
+    $adcua_firstpage_Error_txtBlock.Text = ""
+    $adcua_firstpage_AltUserName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltUserName_txtbox.Text = ""
+    $adcua_firstpage_AltDisplayName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltDisplayName_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_secondpage_ADAccount_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ADAccount_Error_txtblock.Visibility = "Hidden"
+    $adcua_secondpage_ADAccount_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_finalsuccess_txtBlock.Text = ""
+    $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Green"
+    $adcua_secondpage_ExchAcct_Success_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ExchAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_ExchAcct_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_prgbar.Visibility = "Visible"
+    $adcua_secondpage_SkypeAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_Success_txtBlock.Visibility = "Hidden"
+})
+
+$adcua_firstpage_Close_btn.Add_Click({
+    $Form.Close()
+})
+
+$adcua_secondpage_Close_btn.Add_Click({
+    $Form.Close()
+})
+
+$adcua_secondpage_crtUserAcct_btn.Add_Click({
+    $adcua_secondpage_body_grid.Visibility = "Hidden"
+    $ad_title_create_user_acct_panel.Visibility = "Visible"
+    $ad_user_create_Back_btn_FirstPage.Visibility = "Visible"
+    $ad_body_create_user_acct_grid_firstpage.Visibility = "Visible"
+    $adcua_firstpage_FirstName_txtbox.Text = ""
+    $adcua_firstpage_FirstName_label.Foreground = "Black"
+    $adcua_firstpage_MiddleInital_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_firstpage_LastName_txtbox.Text = ""
+    $adcua_firstpage_LastName_label.Foreground = "Black"
+    $adcua_firstpage_milcivctr_box.Text = ""
+    $adcua_firstpage_milcivctr_label.Foreground = "Black"
+    $adcua_firstpage_Password_box.Password = ""
+    $adcua_firstpage_Password_label.Foreground = "Black"
+    $adcua_firstpage_Error_txtBlock.Text = ""
+    $adcua_firstpage_AltUserName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltUserName_txtbox.Text = ""
+    $adcua_firstpage_AltDisplayName_panel.Visibility = "Hidden"
+    $adcua_firstpage_AltDisplayName_txtbox.Text = ""
+    $adcua_firstpage_MiddleInitial_label.Foreground = "Black"
+    $adcua_secondpage_ADAccount_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ADAccount_Error_txtblock.Visibility = "Hidden"
+    $adcua_secondpage_ADAccount_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_finalsuccess_txtBlock.Text = ""
+    $adcua_secondpage_finalsuccess_txtBlock.Foreground = "Green"
+    $adcua_secondpage_ExchAcct_Success_prgbar.Visibility = "Visible"
+    $adcua_secondpage_ExchAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_ExchAcct_Success_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_prgbar.Visibility = "Visible"
+    $adcua_secondpage_SkypeAcct_Error_txtBlock.Visibility = "Hidden"
+    $adcua_secondpage_SkypeAcct_Success_txtBlock.Visibility = "Hidden"
+})
+
+# End Events for Active Directory User Creation Script
+# ----------------------------------------------------------------------------------
+
+# Shows the Form
+$Form.ShowDialog() | Out-Null

@@ -1,0 +1,22 @@
+{
+  "version": "2",
+  "build_cookbook": {
+    "name": "build_cookbook",
+    "path": ".delivery/build_cookbook"
+  },
+  "skip_phases": [
+  ],
+  "build_nodes": {},
+  "delivery-truck": {
+    "lint": {
+      "foodcritic": {
+        "ignore_rules": ["FC033"]
+      }
+    },
+    "publish":{
+      "chef_server": "true",
+      "supermarket": "https://CHEF-MKT.test.local"
+    }
+  },
+  "dependencies": []
+}
